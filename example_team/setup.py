@@ -37,7 +37,8 @@ setup(
             'move_robots = example_team.examples.move_robots:main',
             'dummy_inspection = example_team.examples.dummy_inspection:main',
             'pick_from_tester = example_team.examples.pick_from_tester:main',
-            'submit_kit = example_team.examples.submit_kit:main'
+            'submit_kit = example_team.examples.submit_kit:main',
+            'tool_change = example_team.examples.tool_change:main'
         ],
     },
 )
