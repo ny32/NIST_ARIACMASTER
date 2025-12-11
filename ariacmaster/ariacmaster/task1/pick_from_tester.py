@@ -4,9 +4,9 @@ import rclpy
 from rclpy.executors import MultiThreadedExecutor
 from rclpy.time import Duration
 
-from example_team.environment_interface import Environment
-from example_team.robots import InspectionRobot2
-from example_team.utils import AsyncUtils
+from ariacmaster.environment_interface import Environment
+from ariacmaster.robots import InspectionRobot2
+from ariacmaster.utils import AsyncUtils
 
 async def run():
     rclpy.init()

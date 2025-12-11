@@ -3,7 +3,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: example_team
+    container_name: ariacmaster
     ports:
       - "8080:8080"
     volumes:

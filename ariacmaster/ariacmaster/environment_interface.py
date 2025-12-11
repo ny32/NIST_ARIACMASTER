@@ -30,7 +30,7 @@ from ariac_interfaces.srv import (
 
 from ariac_interfaces.action import MoveAgv
 
-from example_team.utils import AsyncUtils
+from ariacmaster.utils import AsyncUtils
 
 class Environment(Node):
     def __init__(self):

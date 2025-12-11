@@ -3,7 +3,7 @@ from setuptools import find_packages, setup
 import os
 from glob import glob
 
-package_name = 'example_team'
+package_name = 'ariacmaster'
 
 # Collect every file inside config/, keeping their internal structure
 config_files = [
@@ -34,11 +34,12 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'move_robots = example_team.examples.move_robots:main',
-            'dummy_inspection = example_team.examples.dummy_inspection:main',
-            'pick_from_tester = example_team.examples.pick_from_tester:main',
-            'submit_kit = example_team.examples.submit_kit:main',
-            'tool_change = example_team.examples.tool_change:main'
+            'move_robots = ariacmaster.task1.move_robots:main',
+            'physical_inspection = ariacmaster.task1.physical_inspection:main',
+            'dummy_inspection = ariacmaster.task1.dummy_inspection:main',
+            'pick_from_tester = ariacmaster.task1.pick_from_tester:main',
+            'submit_kit = ariacmaster.task1.submit_kit:main',
+            'tool_change = ariacmaster.task1.tool_change:main'
         ],
     },
 )

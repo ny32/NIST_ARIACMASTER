@@ -5,9 +5,9 @@ from rclpy.executors import MultiThreadedExecutor
 
 from ariac_interfaces.msg import VacuumTools
 
-from example_team.environment_interface import Environment
-from example_team.robots import AssemblyRobot2
-from example_team.utils import AsyncUtils
+from ariacmaster.environment_interface import Environment
+from ariacmaster.robots import AssemblyRobot2
+from ariacmaster.utils import AsyncUtils
 
 async def run():
     rclpy.init()

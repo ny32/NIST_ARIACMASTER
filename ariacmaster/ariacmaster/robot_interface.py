@@ -27,7 +27,7 @@ from moveit.core.robot_trajectory import RobotTrajectory
 from moveit_msgs.msg import MoveItErrorCodes
 from geometry_msgs.msg import Pose, PoseStamped
 
-from example_team.utils import AsyncUtils
+from ariacmaster.utils import AsyncUtils
 
 class ExecutionStatus(Enum):
     UNKNOWN = "UNKNOWN"

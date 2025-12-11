@@ -3,9 +3,9 @@ import asyncio
 import rclpy
 from rclpy.executors import MultiThreadedExecutor
 
-from example_team.environment_interface import Environment
-from example_team.robot_interface import Robot
-from example_team.utils import AsyncUtils
+from ariacmaster.environment_interface import Environment
+from ariacmaster.robot_interface import Robot
+from ariacmaster.utils import AsyncUtils
 
 async def run():
     rclpy.init()

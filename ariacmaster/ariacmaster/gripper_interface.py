@@ -7,7 +7,7 @@ from rclpy.action import ActionClient
 from rclpy.action.client import ClientGoalHandle, GoalStatus
 
 from ariac_interfaces.action import GripperCommand
-from example_team.utils import AsyncUtils
+from ariacmaster.utils import AsyncUtils
 
 class Gripper:
     def __init__(self, node: Node, robot_name: str):

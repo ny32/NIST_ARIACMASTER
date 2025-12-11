@@ -13,9 +13,9 @@ from geometry_msgs.msg import Pose, Point, Vector3, Quaternion
 from ariac_interfaces.msg import VacuumTools
 from ariac_interfaces.srv import AttachTool, Trigger
 
-from example_team.robot_interface import Robot
-from example_team.gripper_interface import Gripper
-from example_team.utils import AsyncUtils, quaternion_from_list
+from ariacmaster.robot_interface import Robot
+from ariacmaster.gripper_interface import Gripper
+from ariacmaster.utils import AsyncUtils, quaternion_from_list
 
 class InspectionRobot2(Robot):
     def __init__(self):

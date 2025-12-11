@@ -6,14 +6,15 @@ from rclpy.executors import MultiThreadedExecutor
 
 from ariac_interfaces.msg import CellTypes, InspectionReport
 
-from example_team.environment_interface import Environment
-from example_team.sensors_interface import Sensors
-from example_team.utils import AsyncUtils
+from ariacmaster.environment_interface import Environment
+from ariacmaster.sensors_interface import Sensors
+from ariacmaster.utils import AsyncUtils
+
 
 async def run():
     rclpy.init()
 
-    # Create and spin executor
+    # Initialization snippet
     executor = MultiThreadedExecutor()
     shutdown_event = asyncio.Event()
     spin_task = asyncio.create_task(AsyncUtils.spin_executor(executor, shutdown_event))
@@ -23,45 +24,53 @@ async def run():
     executor.add_node(environment)
     executor.add_node(sensors)
 
+    #Shorthand for logging
+    elog = environment.get_logger().info
+
     try:
-        environment.get_logger().info("Waiting for enviornment to be ready")
+        elog("Waiting for environment to be ready")
         await environment.competition.ready.wait()
 
-        environment.get_logger().info("Starting competition")
+        elog("Starting competition")
         await environment.competition.start()
 
-        environment.get_logger().info("Starting cell feed with Li-Ion cells")
+        elog("Starting cell feed with Lithium Ion Cells")
         await environment.inspection_conveyor.start_cell_feed(CellTypes.LI_ION)
-
-        num_cells = 8
-        for i in range(num_cells):
-            cell = await sensors.inspection_bb.cell_queue.get()
-
-            environment.get_logger().info(f"Cell detected at {cell.detection_time.nanoseconds/1E9} seconds")
+        max_cells = 8
+        for i in range(max_cells):
+        
+            current_cell = await sensors.inspection_bb.cell_queue.get()
+            elog("Cell Detected")
 
             # Simulate inspection time
+            elog("Wait... Inpecting Cell")
             await AsyncUtils.await_for_duration(environment.get_clock(), Duration(seconds=1))
 
+            # Implement logic to look for defects in cell
+            """
             environment.get_logger().info("Submitting inspection report")
             report = InspectionReport(passed=True)
             await environment.inspection_conveyor.submit_inspection_report(report)
+            """
 
-            if i == (num_cells/2 - 1):
-                environment.get_logger().info("Starting cell feed with NiMH cells")
+
+            if i == max_cells / 2:
+                environment.get_logger().info("Changing cell feed type to Nickel Metal Hydride Cells")
                 await environment.inspection_conveyor.start_cell_feed(CellTypes.NIMH)
-
-        # Wait for last cell to pass through inspection door
+            
+        # End loop
+                # Wait for last cell to pass through inspection door
         await AsyncUtils.await_for_duration(environment.get_clock(), Duration(seconds=0.7 / environment.inspection_conveyor.speed)) 
 
+        environment.get_logger().info("Maximum capacity is 8: Loop exited, stopping cell feed")
         await environment.inspection_conveyor.stop_cell_feed()
 
-        await environment.competition.end(shutdown=False)      
-
+        await environment.competition.end(shutdown=False)
     except Exception as e:
-        print(5*'\n', e, 5*'\n')
+        print(f"\n\n\n---------\n{e}\n-------------\n\n\n")
     finally:
         shutdown_event.set()
-        await spin_task  
+        await spin_task
 
 def main():
     asyncio.run(run())

@@ -4,8 +4,8 @@ import rclpy
 from rclpy.time import Duration
 from rclpy.executors import MultiThreadedExecutor
 
-from example_team.environment_interface import Environment
-from example_team.utils import AsyncUtils
+from ariacmaster.environment_interface import Environment
+from ariacmaster.utils import AsyncUtils
 
 from ariac_interfaces.msg import AgvStations
 
