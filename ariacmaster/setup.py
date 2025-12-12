@@ -34,12 +34,16 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'move_robots = ariacmaster.task1.move_robots:main',
             'physical_inspection = ariacmaster.task1.physical_inspection:main',
-            'dummy_inspection = ariacmaster.task1.dummy_inspection:main',
-            'pick_from_tester = ariacmaster.task1.pick_from_tester:main',
-            'submit_kit = ariacmaster.task1.submit_kit:main',
-            'tool_change = ariacmaster.task1.tool_change:main'
+            'conveyor_pickup = ariacmaster.task1.conveyor_pickup:main',
+            'agv_placement = ariacmaster.task1.agv_placement:main',
+            'move_agv = ariacmaster.task1.move_agv:main',
+            'voltage_inspection = ariacmaster.task1.voltage_inspection:main',
+            'move_robots = ariacmaster.examples.move_robots:main',
+            'dummy_inspection = ariacmaster.examples.dummy_inspection:main',
+            'pick_from_tester = ariacmaster.examples.pick_from_tester:main',
+            'submit_kit = ariacmaster.examples.submit_kit:main',
+            'tool_change = ariacmaster.examples.tool_change:main'
         ],
     },
 )
