@@ -13,5 +13,5 @@ Below is the behavior tree structure followed in my code, each color indicates a
 - Pink is Step 1e - Move AGV
 
 <br><br>
-![Behavior Tree](Library/Task1BehaviorTree.png)
+![Behavior Tree](Library/Task1BehaviorTree.png)<br>
 [View on Figma](https://www.figma.com/board/FQbgSewBoVZuaahuNycCL8/NIST_ARIACMASTER?node-id=0-1&p=f&t=e7GGcnD3WUBGhm5T-0)
