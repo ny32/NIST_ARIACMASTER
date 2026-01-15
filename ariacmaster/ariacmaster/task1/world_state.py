@@ -3,8 +3,8 @@ from typing import Literal
 DoorStates = Literal["Open", "Closed"]
 IRLocations = Literal["Conveyor", "Tester 1", "Tester 2", "Recycling Bin", "AGV 1", "AGV 2", "AGV 3"]
 Testers = Literal["Both", "Tester 1", "Tester 2", "None"]
-AGVs = Literal["AGV 1", "AGV 2", "AGV 3", "None"]
-AGVLocations = Literal["Inspection", "Assembly", "Shipping", "Recycling"]
+AGVs = Literal["AGV 1", "AGV 2", "AGV 3"]
+AGVLocations = Literal["Inspection", "Assembly", "Shipping", "Recycling", "Intersection"]
 Defects = Literal["None", "Dent", "Scratch", "Bulge"]
 Cells = Literal["Cell 1", "Cell 2", "None"]
 Slots = Literal[" ", "X"]
@@ -34,12 +34,13 @@ class WorldState:
         self.IR2TargetCell: Cells = "None"
 
         self.FreeTesters: Testers = "Both"
-        self.AGVPriority: AGVs = "None" #Right of way for AGVs at intersections
         self.cellsDisposed: int = 0
         self.cellsKitted: int = 0
         self.cellsQueued: int = 0
         self.voltageReading: float = 0.0
         self.FreeAGVSlot: list[int] = [0, 0]
+
+        self.filledAGVs: list[AGVs] = []
 
         self.AGVSlots: list[list[Slots]] = [
             [
@@ -52,6 +53,10 @@ class WorldState:
                 " ", " ", " ", " "
             ] # AGV 3
         ]
+
+        self.AGV1Location: AGVLocations = "Inspection"
+        self.AGV2Location: AGVLocations = "Inspection"
+        self.AGV3Location: AGVLocations = "Inspection"
 
     def __str__(self):
         return (

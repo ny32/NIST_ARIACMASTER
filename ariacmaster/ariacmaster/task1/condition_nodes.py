@@ -59,3 +59,31 @@ class CurrentCellTolerable(py_trees.behaviour.Behaviour):
         else:
             self.feedback_message = f"Cell voltage {world.voltageReading}V is out of acceptable range."
             return py_trees.common.Status.FAILURE
+        
+class AGVAtAssembly(py_trees.behaviour.Behaviour):
+    # Check if any AGV is at the Assembly Station
+    def __init__(self, name="Check if any AGV is at Assembly Station"):
+        super().__init__(name)
+    def update(self):
+        if (world.AGV1Location == "Assembly" or
+            world.AGV2Location == "Assembly" or
+            world.AGV3Location == "Assembly"):
+            self.feedback_message = "An AGV is at the Assembly Station."
+            return py_trees.common.Status.SUCCESS
+        else:
+            self.feedback_message = "No AGV is at the Assembly Station."
+            return py_trees.common.Status.FAILURE
+
+class AssemblyAGVSlotsEmpty(py_trees.behaviour.Behaviour):
+    # Check if any AGV at the Assembly Station has empty slots
+    def __init__(self, name="Check for empty slots in AGVs at Assembly Station"):
+        super().__init__(name)
+    def update(self):
+        agv_locations = [world.AGV1Location, world.AGV2Location, world.AGV3Location]
+        for x in range(0,3):
+            if agv_locations[x] == "Assembly":
+                for slot in world.AGVSlots[x]:
+                    if slot != " ":
+                        self.feedback_message = f"AGV {x+1} at Assembly is not empty."
+                        return py_trees.common.Status.FAILURE
+                return py_trees.common.Status.SUCCESS
