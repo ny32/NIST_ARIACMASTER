@@ -78,19 +78,7 @@ class IR2GraspCell(py_trees.behaviour.Behaviour):
             return py_trees.common.Status.SUCCESS
         return py_trees.common.Status.FAILURE
 
-class FindNearestFreeAGVSlot(py_trees.behaviour.Behaviour):
-    def __init__(self, name="Locate Nearest Cell"):
-        super().__init__(name)
-    
-    def update(self):
-        for AGV in range(0,3):
-            for Slot in range(0, 4):
-                if world.AGVSlots[AGV][Slot] != "X":
-                    world.FreeAGVSlot = [AGV, Slot]
-                    self.feedback_message = f"Found available slot {Slot} on AGV {AGV}."
-                    return py_trees.common.Status.SUCCESS
-        self.feedback_message = "No available AGV slots at this time."
-        return py_trees.common.Status.FAILURE
+
 
 class IR2MoveToAGVSlot(py_trees.behaviour.Behaviour):
     def __init__(self, name="Move IR2 to free AGV Slot"):
