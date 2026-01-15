@@ -1,4 +1,13 @@
 from typing import Literal
+import py_trees
+
+import action_nodes.competition_behaviors as competition
+import action_nodes.inspection_behaviors as inspection
+import action_nodes.agv_behaviors as agv
+import action_nodes.ir1_behaviors as ir1
+import action_nodes.ir2_behaviors as ir2
+
+import condition_nodes as condition 
 #String Literal Types
 DoorStates = Literal["Open", "Closed"]
 IRLocations = Literal["Conveyor", "Tester 1", "Tester 2", "Recycling Bin", "AGV 1", "AGV 2", "AGV 3"]
@@ -68,6 +77,20 @@ class WorldState:
             f"-------------------------------------------\n"
             f"Cells Disposed/Kitted: {self.cellsDisposed}/{self.cellsKitted}"
         )
+    
+    def create_behavior_tree(self):
+        # Create the behavior tree:
+        root = py_trees.composites.Sequence(
+        name="NIST ARIAC Selector",
+        memory=False  # Re-evaluate from first child each tick
+        )
+
+        parallel = py_trees.composites.Parallel(
+            name="Parallel Tasks",
+            policy=py_trees.common.ParallelPolicy.SuccessOnAll()
+        )
+
+
 world = WorldState()
 
 # Prevents imports from running this check
