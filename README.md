@@ -1,6 +1,6 @@
 # NIST ARIAC 2025 Submission
 
-"[NIST ARIAC](https://pages.nist.gov/ARIAC_docs/en/latest/index.html) is a competition to test the ability of robots to perform complex manufacturing tasks in a dynamic environment."
+[NIST ARIAC](https://pages.nist.gov/ARIAC_docs/en/latest/index.html) is a competition to test the ability of robots to perform complex manufacturing tasks in a dynamic environment.
 
 ## Task 1 - Inspection and Kit Building
 
