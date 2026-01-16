@@ -1,10 +1,6 @@
 import py_trees
-from py_trees import behaviours
 import time
-import random
-
-from py_trees.common import Status
-from world_state import world, Report
+from world_state import world
 
 
 class FindNearestFreeAGVSlot(py_trees.behaviour.Behaviour):

@@ -1,10 +1,6 @@
 import py_trees
-from py_trees import behaviours
 import time
-import random
-
-from py_trees.common import Status
-from world_state import world, Report
+from world_state import world
 
 class IR1MoveToPickup(py_trees.behaviour.Behaviour):
     def __init__(self, name="IR1MoveToPickup"):

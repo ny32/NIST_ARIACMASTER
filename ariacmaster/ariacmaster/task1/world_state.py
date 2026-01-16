@@ -1,32 +1,12 @@
-from typing import Literal
 import py_trees
-
 import action_nodes.competition_behaviors as competition
 import action_nodes.inspection_behaviors as inspection
 import action_nodes.agv_behaviors as agv
 import action_nodes.ir1_behaviors as ir1
 import action_nodes.ir2_behaviors as ir2
-
-import condition_nodes as condition 
-#String Literal Types
-DoorStates = Literal["Open", "Closed"]
-IRLocations = Literal["Conveyor", "Tester 1", "Tester 2", "Recycling Bin", "AGV 1", "AGV 2", "AGV 3"]
-Testers = Literal["Both", "Tester 1", "Tester 2", "None"]
-AGVs = Literal["AGV 1", "AGV 2", "AGV 3"]
-AGVLocations = Literal["Inspection", "Assembly", "Shipping", "Recycling", "Intersection"]
-Defects = Literal["None", "Dent", "Scratch", "Bulge"]
-Cells = Literal["Cell 1", "Cell 2", "None"]
-Slots = Literal[" ", "X"]
-#String Literal Types
-
-# NIST ARIAC Definitions
-NORMAL_CELL_VOLTAGE = 12.7 # Normal Voltage for a real cell
-ALLOWED_VOLTAGE_TOLERANCE = 0.2 # NIST ARIAC - Allowed voltage tolerance for a cell
-class Report:
-    def __init__(self, Status, DefectType):
-        self.Status: bool = False
-        self.DefectType: Defects = "None"
-# NIST ARIAC Definitions
+import condition_nodes as condition
+from core.ARIAC import Report
+from core.types import DoorStates, IRLocations, Testers, AGVs, AGVLocations, Cells, Slots
 
 class WorldState:
     def __init__(self):

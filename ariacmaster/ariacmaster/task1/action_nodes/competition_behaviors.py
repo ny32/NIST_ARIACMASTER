@@ -1,9 +1,5 @@
 import py_trees
-from py_trees import behaviours
 import time
-
-from py_trees.common import Status
-from world_state import world, Report
 
 class StartCompetition(py_trees.behaviour.Behaviour):
     # Starts the competition

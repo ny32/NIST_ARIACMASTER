@@ -1,6 +1,7 @@
 import py_trees
 from py_trees import behaviours
-from world_state import world, NORMAL_CELL_VOLTAGE, ALLOWED_VOLTAGE_TOLERANCE
+from world_state import world
+from core.constants import NORMAL_CELL_VOLTAGE, ALLOWED_VOLTAGE_TOLERANCE
 
 class DefectFound(py_trees.behaviour.Behaviour):
     # Checks if a defect was found in the report

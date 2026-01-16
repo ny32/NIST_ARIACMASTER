@@ -1,10 +1,7 @@
 import py_trees
-from py_trees import behaviours
 import time
 import random
-
-from py_trees.common import Status
-from world_state import world, Report
+from world_state import world
 
 class setIR2TargetCellTo1(py_trees.behaviour.Behaviour):
     def __init__(self, name="Set IR2 Target Cell to Cell 1"):
