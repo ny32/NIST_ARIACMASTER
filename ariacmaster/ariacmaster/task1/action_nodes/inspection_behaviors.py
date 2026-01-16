@@ -50,6 +50,13 @@ class OpenInspectionDoor(py_trees.behaviour.Behaviour):
         super().__init__(name)
     def update(self):
         world.InspectionDoor = "Open"
+        self.feedback_message = "Inspection Door Opening..."
+        time.sleep(0.2)
         self.feedback_message = "Inspection Door Opened."
         world.cellsQueued += 1
+        time.sleep(2)  # Simulate time taken to open door and for cell to move past
+        self.feedback_message = "Cell has moved past the inspection door. Door closing..."
+        time.sleep(0.2)
+        world.InspectionDoor = "Closed"
+        self.feedback_message = "Inspection Door Closed."
         return py_trees.common.Status.SUCCESS
