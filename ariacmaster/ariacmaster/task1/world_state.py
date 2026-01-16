@@ -61,18 +61,119 @@ class WorldState:
     def create_behavior_tree(self):
         # Create the behavior tree:
         root = py_trees.composites.Sequence(
-        name="NIST ARIAC Selector",
+        name="Root",
         memory=False  # Re-evaluate from first child each tick
         )
 
-        parallel = py_trees.composites.Parallel(
+        parallel_tasks = py_trees.composites.Parallel(
             name="Parallel Tasks",
-            policy=py_trees.common.ParallelPolicy.SuccessOnAll()
+            policy=py_trees.common.ParallelPolicy.SuccessOnAll(synchronise=False)
+        )
+
+        inspection = py_trees.composites.Sequence(
+            name="Inspection",
+            memory=False
+        )
+
+        cell_check = py_trees.composites.Selector(
+            name="Cell Check",
+            memory=False
+        )
+
+        conveyor_pickup = py_trees.composites.Sequence(
+            name="Conveyor Pickup",
+            memory=False
+        )
+
+        wait_for_queue = py_trees.composites.Selector(
+            name="Wait for Queue",
+            memory=False
+        )
+
+        wait_sequence = py_trees.composites.Sequence(
+            name="Wait Sequence",
+            memory=False
+        )
+
+        ir1_tester_selection = py_trees.composites.Selector(
+            name="IR1 Tester Selection",
+            memory=False
+        )
+
+        ir1_tester1_sequence = py_trees.composites.Sequence(
+            name="IR1 Tester 1 Sequence",
+            memory=False
+        )
+        
+        ir1_tester2_sequence = py_trees.composites.Sequence(
+            name="IR1 Tester 2 Sequence",
+            memory=False
+        )
+
+        voltage_inspection = py_trees.composites.Sequence(
+            name="Voltage Inspection",
+            memory=False
+        )
+
+        check_testers_and_wait = py_trees.composites.Selector(
+            name="Check Testers and Wait",
+            memory=False
+        )
+
+        ir2_tester_selection = py_trees.composites.Selector(
+            name="IR2 Tester Selection",
+            memory=False
+        )
+
+        ir2_check_tester1 = py_trees.composites.Sequence(
+            name="IR2 Check Tester 1",
+            memory=False
+        )
+
+        ir2_check_tester2 = py_trees.composites.Sequence(
+            name="IR2 Check Tester 2",
+            memory=False
+        )
+
+        recycle_or_keep_cell_selector = py_trees.composites.Selector(
+            name="Recycle or Keep Cell",
+            memory=False
+        )
+
+        take_good_cell_to_agv = py_trees.composites.Sequence(
+            name="Take Good Cell to AGV",
+            memory=False
+        )
+
+        dispose_bad_cell = py_trees.composites.Sequence(
+            name="Dispose Bad Cell",
+            memory=False
+        )
+
+        agv_movement = py_trees.composites.Parallel(
+            name="AGV Movement",
+            policy=py_trees.common.ParallelPolicy.SuccessOnAll(synchronise=False)
+        )
+
+        get_agv_to_assembly = py_trees.composites.Sequence(
+            name="Get AGV to Assembly",
+            memory=False
+        )
+
+        return_agv_to_inspection = py_trees.composites.Sequence(
+            name="Return AGV to Inspection",
+            memory=False
         )
 
 
-world = WorldState()
+        # Decorators/Inverters added here... (do later)
 
+
+        # Build the tree by adding children to parents here... (do later)
+
+
+
+world = WorldState()
 # Prevents imports from running this check
 if __name__ == "__main__":
     print("World State Initialized:")
