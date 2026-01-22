@@ -1,4 +1,5 @@
 from state import WorldState
+from create_tree import create_behavior_tree
 import py_trees
 import time
 
@@ -22,3 +23,11 @@ def tick_tree(tree, num_ticks=1, delay=0.5):
 
         if delay > 0:
             time.sleep(delay)
+
+if __name__ == "__main__":
+    tree = create_behavior_tree()
+
+    # Keep initialized conditions
+
+    # Run until lane change completes
+    tick_tree(tree, num_ticks=3, delay=1)

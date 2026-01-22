@@ -5,7 +5,7 @@ import action_nodes.inspection_behaviors as inspection_node
 import action_nodes.agv_behaviors as agv
 import action_nodes.ir_behaviors as ir_node
 import condition_nodes as condition
-def create_behavior_tree(self):
+def create_behavior_tree():
         # Create the behavior tree:
         # Nodes without children...
         root = py_trees.composites.Sequence(
