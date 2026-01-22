@@ -1,11 +1,11 @@
 import py_trees
 import core.constants as constants
-import action_nodes.competition_behaviors as competition
-import action_nodes.inspection_behaviors as inspection_node
-import action_nodes.agv_behaviors as agv
-import action_nodes.ir_behaviors as ir_node
-import condition_nodes as condition
-def create_behavior_tree():
+import nodes.competition_behaviors as competition
+import nodes.inspection_behaviors as inspection_node
+import nodes.agv_behaviors as agv
+import nodes.ir_behaviors as ir_node
+import nodes.conditions as condition
+def create():
         # Create the behavior tree:
         # Nodes without children...
         root = py_trees.composites.Sequence(

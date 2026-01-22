@@ -1,5 +1,5 @@
-from state import WorldState
-from create_tree import create_behavior_tree
+from world.state import WorldState
+import world.tree as bt
 import py_trees
 import time
 
@@ -25,7 +25,7 @@ def tick_tree(tree, num_ticks=1, delay=0.5):
             time.sleep(delay)
 
 if __name__ == "__main__":
-    tree = create_behavior_tree()
+    tree = bt.create()
 
     # Keep initialized conditions
 

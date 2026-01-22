@@ -1,6 +1,6 @@
 import py_trees
 import time
-from world.main import WORLD
+from main import WORLD
 
 
 class FindNearestFreeAGVSlot(py_trees.behaviour.Behaviour):

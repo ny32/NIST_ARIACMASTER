@@ -1,7 +1,7 @@
 import py_trees
 import time
 import random
-from world.main import WORLD
+from main import WORLD
 from core.ARIAC import Report
 class ConstructLIDARModel(py_trees.behaviour.Behaviour):
     # Scans the cell using LIDAR and constructs a 3D model

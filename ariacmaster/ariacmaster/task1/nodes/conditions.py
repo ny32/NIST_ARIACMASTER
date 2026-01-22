@@ -1,5 +1,5 @@
 import py_trees
-from world.main import WORLD
+from main import WORLD
 from core.constants import NORMAL_CELL_VOLTAGE, ALLOWED_VOLTAGE_TOLERANCE
 
 class DefectFound(py_trees.behaviour.Behaviour):
