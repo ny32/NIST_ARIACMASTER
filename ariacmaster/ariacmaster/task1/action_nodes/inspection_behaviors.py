@@ -1,7 +1,7 @@
 import py_trees
 import time
 import random
-from world_state import world
+from world.main import WORLD
 from core.ARIAC import Report
 class ConstructLIDARModel(py_trees.behaviour.Behaviour):
     # Scans the cell using LIDAR and constructs a 3D model
@@ -23,14 +23,14 @@ class PopulateReport(py_trees.behaviour.Behaviour):
     def update(self):
         # Simulate randomness in defect detection
         randomValue = random.randint(0, 10)
-        world.Report = Report(
+        WORLD.Report = Report(
             Status=False,
             DefectType="Dent" if randomValue == 10 
                         else "Scratch" if randomValue == 9
                         else "Bulge" if randomValue == 8 
                         else "None"
         )
-        self.feedback_message = (f"Report was populated with {world.Report.DefectType + "detected." if world.Report.DefectType != 'None' else "nothing detected."}")
+        self.feedback_message = (f"Report was populated with {WORLD.Report.DefectType + "detected." if WORLD.Report.DefectType != 'None' else "nothing detected."}")
         return py_trees.common.Status.SUCCESS
     
 class SubmitReport(py_trees.behaviour.Behaviour):
@@ -46,14 +46,14 @@ class OpenInspectionDoor(py_trees.behaviour.Behaviour):
     def __init__(self, name="Open Inspection Door"):
         super().__init__(name)
     def update(self):
-        world.InspectionDoor = "Open"
+        WORLD.InspectionDoor = "Open"
         self.feedback_message = "Inspection Door Opening..."
         time.sleep(0.2)
         self.feedback_message = "Inspection Door Opened."
-        world.cellsQueued += 1
+        WORLD.cellsQueued += 1
         time.sleep(2)  # Simulate time taken to open door and for cell to move past
         self.feedback_message = "Cell has moved past the inspection door. Door closing..."
         time.sleep(0.2)
-        world.InspectionDoor = "Closed"
+        WORLD.InspectionDoor = "Closed"
         self.feedback_message = "Inspection Door Closed."
         return py_trees.common.Status.SUCCESS

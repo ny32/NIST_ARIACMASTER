@@ -1,6 +1,6 @@
 import py_trees
 import time
-from world_state import world
+from world.main import WORLD
 
 
 class FindNearestFreeAGVSlot(py_trees.behaviour.Behaviour):
@@ -10,8 +10,8 @@ class FindNearestFreeAGVSlot(py_trees.behaviour.Behaviour):
     def update(self):
         for AGV in range(0,3):
             for Slot in range(0, 4):
-                if world.AGVSlots[AGV][Slot] != "X":
-                    world.FreeAGVSlot = [AGV, Slot]
+                if WORLD.AGVSlots[AGV][Slot] != "X":
+                    WORLD.FreeAGVSlot = [AGV, Slot]
                     self.feedback_message = f"Found available slot {Slot} on AGV {AGV}."
                     return py_trees.common.Status.SUCCESS
         self.feedback_message = "No available AGV slots at this time."
@@ -24,7 +24,7 @@ class LocateFilledInspectionAGVs(py_trees.behaviour.Behaviour):
         for AGV in range(0, 3):
             slotsFilled = True
             for slots in range (0, 4):
-                if world.AGVSlots[slots] != "X":
+                if WORLD.AGVSlots[slots] != "X":
                     slotsFilled = False
                     break
             if slotsFilled:
@@ -35,8 +35,8 @@ class LocateFilledInspectionAGVs(py_trees.behaviour.Behaviour):
                         AGVName = "AGV 2"
                     case 2:
                         AGVName = "AGV 3"
-                if AGVName not in world.filledAGVs:
-                    world.filledAGVs.append(AGVName)
+                if AGVName not in WORLD.filledAGVs:
+                    WORLD.filledAGVs.append(AGVName)
                     self.feedback_message = f"{AGVName} is filled and ready to move."
         return py_trees.common.Status.SUCCESS
 
@@ -44,23 +44,23 @@ class MoveAGVsToIntersection(py_trees.behaviour.Behaviour):
     def __init__(self, name="Move filled AGVs to intersection"):
         super().__init__(name)
     def update(self):
-        for AGV in world.filledAGVs:
+        for AGV in WORLD.filledAGVs:
             match AGV:
                 case "AGV 1":
-                    if world.AGV1Location != "Intersection":
+                    if WORLD.AGV1Location != "Intersection":
                         self.feedback_message = "Moving AGV 1 to Intersection"
                         # Simulate movement time and progress
                         self.feedback_message = "AGV 1 in transit..."
                         time.sleep(2)
                         self.feedback_message = "AGV 1 reached Intersection"
                 case "AGV 2":
-                    if world.AGV2Location != "Intersection":
+                    if WORLD.AGV2Location != "Intersection":
                         self.feedback_message = "Moving AGV 2 to Intersection"
                         self.feedback_message = "AGV 1 in transit..."
                         time.sleep(2)
                         self.feedback_message = "AGV 2 reached Intersection"
                 case "AGV 3":
-                    if world.AGV3Location != "Intersection":
+                    if WORLD.AGV3Location != "Intersection":
                         self.feedback_message = "Moving AGV 3 to Intersection"
                         self.feedback_message = "AGV 1 in transit..."
                         time.sleep(2)
@@ -80,36 +80,36 @@ class MoveAGVToAssembly(py_trees.behaviour.Behaviour):
     def __init__(self, name="Move AGV to Assembly Station"):
         super().__init__(name)
     def update(self):
-        for AGV in world.filledAGVs:
+        for AGV in WORLD.filledAGVs:
             match AGV:
                 case "AGV 1":
-                    if world.AGV1Location == "Intersection":
+                    if WORLD.AGV1Location == "Intersection":
                         self.feedback_message = "Moving AGV 1 to Assembly Station"
                         # Simulate movement time and progress
                         self.feedback_message = "AGV 1 in transit..."
                         time.sleep(2)
-                        world.AGV1Location = "Assembly"
+                        WORLD.AGV1Location = "Assembly"
                         self.feedback_message = "AGV 1 reached Assembly Station"
                 case "AGV 2":
-                    if world.AGV2Location == "Intersection":
+                    if WORLD.AGV2Location == "Intersection":
                         self.feedback_message = "Moving AGV 2 to Assembly Station"
                         self.feedback_message = "AGV 2 in transit..."
                         time.sleep(2)
-                        world.AGV2Location = "Assembly"
+                        WORLD.AGV2Location = "Assembly"
                         self.feedback_message = "AGV 2 reached Assembly Station"
                 case "AGV 3":
-                    if world.AGV3Location == "Intersection":
+                    if WORLD.AGV3Location == "Intersection":
                         self.feedback_message = "Moving AGV 3 to Assembly Station"
                         self.feedback_message = "AGV 3 in transit..."
                         time.sleep(2)
-                        world.AGV3Location = "Assembly"
+                        WORLD.AGV3Location = "Assembly"
                         self.feedback_message = "AGV 3 reached Assembly Station"
         return py_trees.common.Status.SUCCESS
 class MoveAssemblyAGVToInspection(py_trees.behaviour.Behaviour):
     def __init__(self, name="Move Assembly AGV to Inspection Station"):
         super().__init__(name)
     def update(self):
-        agv_locations = [world.AGV1Location, world.AGV2Location, world.AGV3Location]
+        agv_locations = [WORLD.AGV1Location, WORLD.AGV2Location, WORLD.AGV3Location]
         for x in range(0,3):
             if agv_locations[x] == "Assembly":
                 self.feedback_message = f"Moving AGV {x+1} to Inspection Station"
@@ -117,10 +117,10 @@ class MoveAssemblyAGVToInspection(py_trees.behaviour.Behaviour):
                 # Bypasses intersection because all vehicles will yield to assembly vehicles
                 match x:
                     case 0:
-                        world.AGV1Location = "Inspection"
+                        WORLD.AGV1Location = "Inspection"
                     case 1:
-                        world.AGV2Location = "Inspection"
+                        WORLD.AGV2Location = "Inspection"
                     case 2:
-                        world.AGV3Location = "Inspection"
+                        WORLD.AGV3Location = "Inspection"
                 self.feedback_message = f"AGV {x+1} reached Inspection Station"
         return py_trees.common.Status.SUCCESS

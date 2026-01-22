@@ -1,6 +1,5 @@
 import py_trees
-from py_trees import behaviours
-from world_state import world
+from world.main import WORLD
 from core.constants import NORMAL_CELL_VOLTAGE, ALLOWED_VOLTAGE_TOLERANCE
 
 class DefectFound(py_trees.behaviour.Behaviour):
@@ -8,8 +7,8 @@ class DefectFound(py_trees.behaviour.Behaviour):
     def __init__(self, name="Defect Found"):
         super().__init__(name)
     def update(self):
-        if world.Report.DefectType != "None":
-            self.feedback_message = f"Defect Found: {world.Report.DefectType}"
+        if WORLD.Report.DefectType != "None":
+            self.feedback_message = f"Defect Found: {WORLD.Report.DefectType}"
             return py_trees.common.Status.SUCCESS
         else:
             self.feedback_message = "No Defect Found"
@@ -19,8 +18,8 @@ class QueuedCell(py_trees.behaviour.Behaviour):
     def __init__(self, name="Queued Cell"):
         super().__init__(name)
     def update(self):
-        if world.cellsQueued > 0:
-            self.feedback_message = f"Cells Queued: {world.cellsQueued}"
+        if WORLD.cellsQueued > 0:
+            self.feedback_message = f"Cells Queued: {WORLD.cellsQueued}"
             return py_trees.common.Status.SUCCESS
         else:
             self.feedback_message = "No Cells Queued"
@@ -31,7 +30,7 @@ class VoltageTester1Free(py_trees.behaviour.Behaviour):
     def __init__(self, name="Check to see if Voltage tester 1 is Free"):
         super().__init__(name)
     def update(self):
-        if world.FreeTesters == "Both" or world.FreeTesters == "Tester 1":
+        if WORLD.FreeTesters == "Both" or WORLD.FreeTesters == "Tester 1":
             self.feedback_message = "Voltage Tester 1 is Free"
             return py_trees.common.Status.SUCCESS
         else:
@@ -43,7 +42,7 @@ class VoltageTester2Free(py_trees.behaviour.Behaviour):
     def __init__(self, name="Check to see if Voltage tester 2 is Free"):
         super().__init__(name)
     def update(self):
-        if world.FreeTesters == "Both" or world.FreeTesters == "Tester 2":
+        if WORLD.FreeTesters == "Both" or WORLD.FreeTesters == "Tester 2":
             self.feedback_message = "Voltage Tester 2 is Free"
             return py_trees.common.Status.SUCCESS
         else:
@@ -54,11 +53,11 @@ class CurrentCellTolerable(py_trees.behaviour.Behaviour):
     def __init__(self, name="Check cell voltage acceptability"):
         super().__init__(name)
     def update(self):
-        if abs(world.voltageReading - NORMAL_CELL_VOLTAGE) <= ALLOWED_VOLTAGE_TOLERANCE:
-            self.feedback_message = f"Cell voltage {world.voltageReading}V is within acceptable range."
+        if abs(WORLD.voltageReading - NORMAL_CELL_VOLTAGE) <= ALLOWED_VOLTAGE_TOLERANCE:
+            self.feedback_message = f"Cell voltage {WORLD.voltageReading}V is within acceptable range."
             return py_trees.common.Status.SUCCESS
         else:
-            self.feedback_message = f"Cell voltage {world.voltageReading}V is out of acceptable range."
+            self.feedback_message = f"Cell voltage {WORLD.voltageReading}V is out of acceptable range."
             return py_trees.common.Status.FAILURE
         
 class AGVAtAssembly(py_trees.behaviour.Behaviour):
@@ -66,9 +65,9 @@ class AGVAtAssembly(py_trees.behaviour.Behaviour):
     def __init__(self, name="Check if any AGV is at Assembly Station"):
         super().__init__(name)
     def update(self):
-        if (world.AGV1Location == "Assembly" or
-            world.AGV2Location == "Assembly" or
-            world.AGV3Location == "Assembly"):
+        if (WORLD.AGV1Location == "Assembly" or
+            WORLD.AGV2Location == "Assembly" or
+            WORLD.AGV3Location == "Assembly"):
             self.feedback_message = "An AGV is at the Assembly Station."
             return py_trees.common.Status.SUCCESS
         else:
@@ -80,10 +79,10 @@ class AssemblyAGVSlotsEmpty(py_trees.behaviour.Behaviour):
     def __init__(self, name="Check for empty slots in AGVs at Assembly Station"):
         super().__init__(name)
     def update(self):
-        agv_locations = [world.AGV1Location, world.AGV2Location, world.AGV3Location]
+        agv_locations = [WORLD.AGV1Location, WORLD.AGV2Location, WORLD.AGV3Location]
         for x in range(0,3):
             if agv_locations[x] == "Assembly":
-                for slot in world.AGVSlots[x]:
+                for slot in WORLD.AGVSlots[x]:
                     if slot != " ":
                         self.feedback_message = f"AGV {x+1} at Assembly is not empty."
                         return py_trees.common.Status.FAILURE
